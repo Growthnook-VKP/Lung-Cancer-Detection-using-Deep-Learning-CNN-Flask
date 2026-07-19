@@ -1,0 +1,9 @@
+flask
+pandas
+numpy
+Python 3.9
+TensorFlow 2.10
+scikit-learn
+catboost
+
+

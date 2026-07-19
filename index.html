@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lung Cancer AI Diagnosis</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+
+    <h1>Lung Cancer Image Analysis</h1>
+    <p class="subtitle">Deep Learning Based Medical Diagnosis System</p>
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="image" required>
+        <button type="submit">Analyze Image</button>
+    </form>
+
+    {% if prediction %}
+        <div class="architecture">
+        <h2>Model Architecture</h2>
+        <img src="{{ url_for('static', filename=summary_img) }}" alt="Model Summary" style="width:80%;">
+    </div>
+
+    <div class="result-card">
+        <h2>Prediction Result</h2>
+        <p class="prediction">{{ prediction }}</p>
+        <div class="confidence-bar">
+            <div style="width: {{ confidence }}%"></div>
+        </div>
+        <p class="confidence">{{ confidence }}% confidence</p>
+
+        <table>
+            <tr><th>Class</th><th>Probability</th></tr>
+            {% for name, prob in probabilities %}
+            <tr>
+                <td>{{ name }}</td>
+                <td>{{ prob }}%</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+{% if chart_available %}
+<div class="gradcam-section">
+    <h2>Model Confidence Analysis</h2>
+    <div class="gradcam-container">
+        <div>
+            <p>Uploaded Image</p>
+            <img src="{{ url_for('static', filename='original_input.png') }}" style="width:250px">
+        </div>
+        <div>
+            <p>Prediction Probability Distribution</p>
+            <img src="{{ url_for('static', filename=prob_chart) }}" style="width:350px">
+        </div>
+    </div>
+</div>
+{% endif %}
+    {% endif %}
+
+
+</div>
+</body>
+</html>
